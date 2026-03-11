@@ -124,4 +124,26 @@ function updateTable(table, data) {
   }).forceRender();
 }
 
-createTable(getServers()).render(document.getElementById('wrapper'));
+const table = createTable(getServers()).render(document.getElementById('wrapper'));
+
+let selectedRow = null;
+
+table.on('rowClick', (e, row) => {
+  document.querySelectorAll('tr.selected').forEach(r => r.classList.remove('selected'));
+
+  e.currentTarget.classList.add('selected');
+  selectedRow = {
+    ip: row.cells[1].data,
+  };
+
+  document.getElementById('btn-connect').disabled = false;
+  document.getElementById('btn-copy').disabled = false;
+});
+
+document.getElementById('btn-connect').addEventListener('click', () => {
+  if (selectedRow) window.location.href = `steam://connect/${selectedRow.ip}`;
+});
+
+document.getElementById('btn-copy').addEventListener('click', () => {
+  if (selectedRow) navigator.clipboard.writeText(selectedRow.ip);
+});
