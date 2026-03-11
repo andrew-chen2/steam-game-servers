@@ -78,7 +78,7 @@ function transformData(data) {
   return servers;
 }
 
-function createTable(data) {
+function createTable() {
   return new gridjs.Grid({
     columns: [
       'Server Name',
@@ -107,9 +107,7 @@ function createTable(data) {
     pagination: {
       limit: 15,
     },
-    data: () => {
-      return data.then((data) => transformData(data.servers));
-    },
+    data: [],
   });
 }
 
@@ -121,7 +119,7 @@ function updateTable(table, data) {
   }).forceRender();
 }
 
-const table = createTable(getServers()).render(document.getElementById('wrapper'));
+const table = createTable().render(document.getElementById('wrapper'));
 
 let selectedRow = null;
 
