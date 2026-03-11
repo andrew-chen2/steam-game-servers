@@ -116,4 +116,12 @@ function createTable(data) {
   });
 }
 
+function updateTable(table, data) {
+  table.updateConfig({
+    data: () => {
+      return data.then((data) => transformData(data.servers));
+    },
+  }).forceRender();
+}
+
 createTable(getServers()).render(document.getElementById('wrapper'));
