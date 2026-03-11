@@ -104,9 +104,6 @@ function createTable(data) {
       'Secure'
     ],
     sort: true,
-    search: {
-      selector: (cell, rowIndex, cellIndex) => cellIndex === 0 ? cell : null
-    },
     pagination: {
       limit: 15,
     },
@@ -146,4 +143,20 @@ document.getElementById('btn-connect').addEventListener('click', () => {
 
 document.getElementById('btn-copy').addEventListener('click', () => {
   if (selectedRow) navigator.clipboard.writeText(selectedRow.ip);
+});
+
+document.getElementById('search-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const sanitize = (val) => val.replace(/\\/g, '');
+
+  const data = Object.fromEntries(new FormData(e.target));
+  let filter = '';
+
+  const name = data['search-name'].trim();
+  const map  = data['search-map'].trim();
+  if (name) filter += `\\name_match\\*${sanitize(name)}*`;
+  if (map)  filter += `\\map\\${sanitize(map)}`;
+
+  updateTable(table, getServers(5000, filter));
 });

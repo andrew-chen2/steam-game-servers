@@ -19,8 +19,17 @@
 <body>
     <div class="container-fluid">
         <div>
-            <button id="btn-connect" class="btn btn-primary" disabled>Join Server</button>
-            <button id="btn-copy" class="btn btn-secondary" disabled>Copy IP</button>
+            <form id="search-form">
+                <label for="search-name" class="form-label">Server Name</label>
+                <input type="text" name="search-name" class="form-control" />
+                <label for="search-map" class="form-label">Map</label>
+                <input type="text" name="search-map" class="form-control" />
+                <button type="submit" class="btn btn-primary">Go</button>
+            </form>
+            <div>
+                <button id="btn-connect" class="btn btn-primary" disabled>Join Server</button>
+                <button id="btn-copy" class="btn btn-secondary" disabled>Copy IP</button>
+            </div>
         </div>
         <div id="wrapper"></div>
     </div>
