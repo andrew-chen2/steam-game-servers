@@ -25,7 +25,15 @@
                 <label for="search-map" class="form-label">Map</label>
                 <input type="text" name="search-map" class="form-control" />
                 <label for="search-game">Game</label>
-                <select id="search-game" name="search-game" class="form-select"></select>
+                <select id="search-game" name="search-game" class="form-select">
+                    <option value="">All</option>
+                </select>
+                <label for="search-secure">Is Secure</label>
+                <input type="checkbox" name="search-secure" />
+                <label for="search-not-full">Not Full</label>
+                <input type="checkbox" name="search-not-full" />
+                <label for="search-has-players">Has Players</label>
+                <input type="checkbox" name="search-has-players" />
                 <button type="submit" class="btn btn-primary">Go</button>
             </form>
             <div>

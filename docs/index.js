@@ -167,9 +167,15 @@ document.getElementById('search-form').addEventListener('submit', (e) => {
   const name = data['search-name'].trim();
   const map = data['search-map'].trim();
   const appid = data['search-game'];
+  const secure = data['search-secure'];
+  const not_full = data['search-not-full'];
+  const has_players = data['search-has-players'];
   if (name) filter += `\\name_match\\*${sanitize(name)}*`;
   if (map) filter += `\\map\\${sanitize(map)}`;
-  if (appid) filter += `\\appid\\${sanitize(appid)}`
+  if (appid) filter += `\\appid\\${sanitize(appid)}`;
+  if (secure) filter += `\\secure\\1`;
+  if (not_full) filter += `\\full\\1`;
+  if (has_players) filter += `\\empty\\1`;
 
   updateTable(table, getServers(5000, filter));
 });
