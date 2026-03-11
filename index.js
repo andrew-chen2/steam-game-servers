@@ -80,7 +80,29 @@ function transformData(data) {
 
 function createTable(data) {
   return new gridjs.Grid({
-    columns: ['Server Name', 'Server IP', 'Game', 'Map', 'Players', 'Secure'],
+    columns: [
+      'Server Name',
+      'Server IP',
+      'Game',
+      'Map',
+      {
+        name: 'Players',
+        sort: {
+          compare: (a, b) => {
+            a = parseInt(a.split('/')[0])
+            b = parseInt(b.split('/')[0])
+            if (a > b) {
+              return 1;
+            } else if (b > a) {
+              return -1;
+            } else {
+              return 0;
+            }
+          }
+        }
+      },
+      'Secure'
+    ],
     sort: true,
     search: {
       selector: (cell, rowIndex, cellIndex) => cellIndex === 0 ? cell : null
