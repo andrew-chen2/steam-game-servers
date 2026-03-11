@@ -119,8 +119,10 @@ function updateTable(table, data) {
   }).forceRender();
 }
 
+// Initialise table
 const table = createTable().render(document.getElementById('wrapper'));
 
+// Connect to server and copy IP buttons
 let selectedRow = null;
 
 table.on('rowClick', (e, row) => {
@@ -143,6 +145,17 @@ document.getElementById('btn-copy').addEventListener('click', () => {
   if (selectedRow) navigator.clipboard.writeText(selectedRow.ip);
 });
 
+// Populate game select options
+const select = document.getElementById('search-game');
+
+gameNames.forEach((name, id) => {
+  let option = document.createElement('option');
+  option.value = id;
+  option.innerHTML = name;
+  select.appendChild(option);
+});
+
+// Handle form
 document.getElementById('search-form').addEventListener('submit', (e) => {
   e.preventDefault();
 
@@ -152,9 +165,11 @@ document.getElementById('search-form').addEventListener('submit', (e) => {
   let filter = '';
 
   const name = data['search-name'].trim();
-  const map  = data['search-map'].trim();
+  const map = data['search-map'].trim();
+  const appid = data['search-game'];
   if (name) filter += `\\name_match\\*${sanitize(name)}*`;
-  if (map)  filter += `\\map\\${sanitize(map)}`;
+  if (map) filter += `\\map\\${sanitize(map)}`;
+  if (appid) filter += `\\appid\\${sanitize(appid)}`
 
   updateTable(table, getServers(5000, filter));
 });
