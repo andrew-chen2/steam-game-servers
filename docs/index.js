@@ -68,7 +68,7 @@ function transformData(data) {
     servers.push([
       server.name ?? 'Server Name Not Found',
       server.addr ?? 'Server IP Not Found',
-      gameNames.get(server.appid) ?? 'Game Not Found',
+      gameNames.get(server.appid) ?? `Game Not Found (appid: ${server.appid})`,
       server.map ?? 'Map Not Found',
       (server.players ?? 0) + '/' + (server.max_players ?? '?'),
       server.secure ? '✅' : '❌',
