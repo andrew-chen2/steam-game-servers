@@ -253,8 +253,14 @@ createTable(filter ? () => getServers(5000, filter).then((data) => transformData
 // Connect to server and copy IP buttons
 let selectedRow = null;
 
-document.getElementById('btn-copy').addEventListener('click', () => {
+document.getElementById('btn-copy').addEventListener('click', (e) => {
   if (selectedRow) navigator.clipboard.writeText(selectedRow.ip);
+  e.target.innerHTML = 'Copied!';
+  e.target.disabled = true;
+  setTimeout(() => {
+    e.target.innerHTML = 'Copy IP';
+    e.target.disabled = false;
+  }, 1500);
 });
 
 // Handle form
