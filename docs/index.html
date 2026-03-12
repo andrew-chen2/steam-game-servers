@@ -28,12 +28,18 @@
                 <select id="search-game" name="search-game" class="form-select">
                     <option value="">All</option>
                 </select>
-                <label for="search-secure">Is Secure</label>
-                <input type="checkbox" name="search-secure" />
-                <label for="search-not-full">Not Full</label>
-                <input type="checkbox" name="search-not-full" />
-                <label for="search-has-players">Has Players</label>
-                <input type="checkbox" name="search-has-players" />
+                <div class="form-check">
+                    <input id="search-secure" type="checkbox" name="search-secure" class="form-check-input" />
+                    <label for="search-secure" class="form-check-label">Is Secure</label>
+                </div>
+                <div class="form-check">
+                    <input id="search-not-full" type="checkbox" name="search-not-full" class="form-check-input" />
+                    <label for="search-not-full" class="form-check-label">Not Full</label>
+                </div>
+                <div class="form-check">
+                    <input id="search-has-players" type="checkbox" name="search-has-players" class="form-check-input" />
+                    <label for="search-has-players" class="form-check-label">Has Players</label>
+                </div>
                 <button type="submit" class="btn btn-primary">Go</button>
             </form>
             <div>
