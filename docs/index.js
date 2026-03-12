@@ -261,6 +261,6 @@ document.getElementById('search-form').addEventListener('submit', (e) => {
     'has_players': !!data['search-has-players'],
   }
 
-  localStorage.setItem('filter', filter_obj);
+  localStorage.setItem('filter', JSON.stringify(filter_obj));
   updateTable(() => getServers(5000, buildFilter(filter_obj)).then((data) => transformData(data.servers)));
 });
