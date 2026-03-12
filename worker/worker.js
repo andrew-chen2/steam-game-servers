@@ -1,5 +1,6 @@
 const CACHE_TTL = 30;
 const STEAM_API_BASE = "https://api.steampowered.com/IGameServersService/GetServerList/v1/";
+const ALLOWED_ORIGIN = "*"; // Change as needed
 
 const FIELDS = [
   "addr",
@@ -32,7 +33,7 @@ function jsonResponse(data, status = 200, extraHeaders = {}) {
     status,
     headers: {
       "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
       "Access-Control-Allow-Methods": "GET, OPTIONS",
       ...extraHeaders,
     },
@@ -45,7 +46,7 @@ export default {
       return new Response(null, {
         status: 204,
         headers: {
-          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
           "Access-Control-Allow-Methods": "GET, OPTIONS",
           "Access-Control-Max-Age": "86400",
         },
@@ -77,7 +78,7 @@ export default {
         status: cached.status,
         headers: {
           ...Object.fromEntries(cached.headers),
-          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
           "X-Cache": "HIT",
         },
       });
