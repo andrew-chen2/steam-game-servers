@@ -14,13 +14,25 @@
       href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css"
       rel="stylesheet"
     />
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <link href="styles.css" rel="stylesheet" />
 </head>
 <body>
     <div id="container" class="container-fluid px-4 py-3">
 
-      <div class="d-flex align-items-center justify-content-between mb-4">
-        <h4 class="mb-0 fw-bold">Steam Server Browser</h4>
+      <div class="d-flex align-items-end justify-content-between mb-3">
+        <div class="d-flex flex-column">
+            <h4 class="mb-0 fw-bold">Steam Server Browser</h4>
+            <div>
+            <a href="https://github.com/andrew-chen2/steam-game-servers">
+                <i class="fa fa-github"></i>
+                <strong>Repository</strong>
+            </a>
+            </div>
+        </div>
         <div class="d-flex gap-2">
           <a id="btn-connect" class="btn btn-success disabled" href="#">Join Server</a>
           <button id="btn-copy" class="btn btn-outline-secondary" disabled>Copy IP</button>
