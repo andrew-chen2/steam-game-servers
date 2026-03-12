@@ -252,17 +252,15 @@ document.getElementById('search-form').addEventListener('submit', (e) => {
 
   const data = Object.fromEntries(new FormData(e.target));
 
-  localStorage.setItem(
-    'filter',
-    JSON.stringify({
-      'name': data['search-name'].trim(),
-      'map': data['search-map'].trim(),
-      'appid': parseInt(data['search-game']),
-      'secure': !!data['search-secure'],
-      'not_full': !!data['search-not-full'],
-      'has_players': !!data['search-has-players'],
-    }),
-  );
+  const filter_obj = {
+    'name': data['search-name'].trim(),
+    'map': data['search-map'].trim(),
+    'appid': parseInt(data['search-game']),
+    'secure': !!data['search-secure'],
+    'not_full': !!data['search-not-full'],
+    'has_players': !!data['search-has-players'],
+  }
 
-  updateTable(() => getServers(5000, buildFilter(data)).then((data) => transformData(data.servers)));
+  localStorage.setItem('filter', filter_obj);
+  updateTable(() => getServers(5000, buildFilter(filter_obj)).then((data) => transformData(data.servers)));
 });
