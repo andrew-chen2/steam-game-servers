@@ -112,7 +112,10 @@ function createTable() {
 }
 
 function updateTable(table, data) {
-  document.getElementById('btn-connect').disabled = true;
+  const connect = document.getElementById('btn-connect');
+  connect.href = '#';
+  connect.classList.add('disabled');
+
   document.getElementById('btn-copy').disabled = true;
 
   table.updateConfig({
@@ -136,12 +139,11 @@ table.on('rowClick', (e, row) => {
     ip: row.cells[1].data,
   };
 
-  document.getElementById('btn-connect').disabled = false;
-  document.getElementById('btn-copy').disabled = false;
-});
+  const connect = document.getElementById('btn-connect');
+  connect.href = `steam://connect/${selectedRow.ip}`;
+  connect.classList.remove('disabled');
 
-document.getElementById('btn-connect').addEventListener('click', () => {
-  if (selectedRow) window.location.href = `steam://connect/${selectedRow.ip}`;
+  document.getElementById('btn-copy').disabled = false;
 });
 
 document.getElementById('btn-copy').addEventListener('click', () => {
