@@ -74,14 +74,10 @@ export default {
     // Cache
     let cached = await cache.match(cacheKey);
     if (cached) {
-      return new Response(cached.body, {
-        status: cached.status,
-        headers: {
-          ...Object.fromEntries(cached.headers),
-          "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
-          "X-Cache": "HIT",
-        },
-      });
+      const headers = new Headers(cached.headers);
+      headers.set("Access-Control-Allow-Origin", ALLOWED_ORIGIN);
+      headers.set("X-Cache", "HIT");
+      return new Response(cached.body, { status: cached.status, headers });
     }
 
     // Steam API
