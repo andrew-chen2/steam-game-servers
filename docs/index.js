@@ -139,6 +139,8 @@ function transformData(data) {
 }
 
 function createTable(data) {
+  document.getElementById('btn-submit').disabled = true;
+
   const table =  new gridjs.Grid({
     columns: [
       'Server Name',
@@ -168,6 +170,15 @@ function createTable(data) {
       limit: 15,
     },
     data: data,
+  });
+
+  // Enable Search button once table is rendered
+  table.config.store.subscribe((state, prevState) => {
+    const prev = prevState.status;
+    const cur = state.status;
+    if ((prev === 2 && cur === 3) || (prev === 1 && cur === 4)) {
+      document.getElementById('btn-submit').disabled = false;
+    }
   });
 
   table.on('rowClick', (e, row) => {
@@ -249,6 +260,8 @@ document.getElementById('btn-copy').addEventListener('click', () => {
 // Handle form
 document.getElementById('search-form').addEventListener('submit', (e) => {
   e.preventDefault();
+
+  if (document.getElementById('btn-submit').disabled) return;
 
   const data = Object.fromEntries(new FormData(e.target));
 
