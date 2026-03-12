@@ -112,6 +112,9 @@ function createTable() {
 }
 
 function updateTable(table, data) {
+  document.getElementById('btn-connect').disabled = true;
+  document.getElementById('btn-copy').disabled = true;
+
   table.updateConfig({
     data: () => {
       return data.then((data) => transformData(data.servers));
