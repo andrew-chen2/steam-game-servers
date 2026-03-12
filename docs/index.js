@@ -171,7 +171,7 @@ document.getElementById('search-form').addEventListener('submit', (e) => {
 
   const name = data['search-name'].trim();
   const map = data['search-map'].trim();
-  const appid = data['search-game'];
+  const appid = data['search-game'].trim();
   const secure = data['search-secure'];
   const not_full = data['search-not-full'];
   const has_players = data['search-has-players'];
