@@ -185,5 +185,5 @@ document.getElementById('search-form').addEventListener('submit', (e) => {
   if (not_full) filter += `\\full\\1`;
   if (has_players) filter += `\\empty\\1`;
 
-  getServers(5000, filter).then((data) => updateTable(transformData(data.servers)));
+  updateTable(() => getServers(5000, filter).then((data) => transformData(data.servers)));
 });
