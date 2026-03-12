@@ -1,6 +1,7 @@
 const CACHE_TTL = 30;
 const STEAM_API_BASE = "https://api.steampowered.com/IGameServersService/GetServerList/v1/";
 const ALLOWED_ORIGIN = "*"; // Change as needed
+const VALVE_SERVER = /valve.*server/i;
 
 const FIELDS = [
   "addr",
@@ -102,7 +103,7 @@ export default {
       return jsonResponse({ error: "Invalid JSON from Steam API" }, 502);
     }
 
-    const servers = body?.response?.servers ?? [];
+    const servers = (body?.response?.servers ?? []).filter(s => !VALVE_SERVER.test(s.name ?? '')); // Filter out Valve servers
     const slimmed = slim(servers);
     const payload = { servers: slimmed, count: slimmed.length, cached_at: Date.now() };
 
