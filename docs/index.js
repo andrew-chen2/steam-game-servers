@@ -92,6 +92,15 @@ const gameNames = new Map([
 
 const WORKER_URL = 'https://steam-game-servers.andrewchen796.workers.dev?';
 
+const FIELD_MAP = {
+  name: 'search-name',
+  map: 'search-map',
+  appid: 'search-game',
+  secure: 'search-secure',
+  not_full: 'search-not-full',
+  has_players: 'search-has-players',
+};
+
 async function getServers(limit, filter) {
   const url = new URL(WORKER_URL);
   if (limit) url.searchParams.set('limit', limit);
@@ -195,50 +204,16 @@ function updateTable(data) {
 
 const sanitize = (val) => val.replace(/\\/g, '');
 
-// Initialise table
-const filter_json = JSON.parse(localStorage.getItem('filter'));
-let filter = '';
-
-if (filter_json) {
-  const name = filter_json['name']?.trim();
-  const map = filter_json['map']?.trim();
-  const appid = filter_json['appid']?.trim();
-  const secure = filter_json['secure'];
-  const not_full = filter_json['not_full'];
-  const has_players = filter_json['has_players'];
-  if (name) {
-    filter += `\\name_match\\*${sanitize(name)}*`;
-    document.getElementById('search-name').value = name;
-  }
-  if (map) {
-    filter += `\\map\\${sanitize(map)}`;
-    document.getElementById('search-map').value = map;
-  }
-  if (appid) {
-    filter += `\\appid\\${sanitize(appid)}`;
-    document.getElementById('search-game').value = appid;
-  }
-  if (secure) {
-    filter += `\\secure\\1`;
-    document.getElementById('search-secure').checked = true;
-  }
-  if (not_full) {
-    filter += `\\full\\1`;
-    document.getElementById('search-not-full').checked = true;
-  }
-  if (has_players) {
-    filter += `\\empty\\1`;
-    document.getElementById('search-has-players').checked = true;
-  }
+function buildFilter({ name, map, appid, secure, not_full, has_players }) {
+  let filter = '';
+  if (name) filter += `\\name_match\\*${sanitize(name)}*`;
+  if (map) filter += `\\map\\${sanitize(map)}`;
+  if (appid) filter += `\\appid\\${appid}`;
+  if (secure) filter += `\\secure\\1`;
+  if (not_full) filter += `\\full\\1`;
+  if (has_players) filter += `\\empty\\1`;
+  return filter;
 }
-createTable(filter ? () => getServers(5000, filter).then((data) => transformData(data.servers)) : []).render(document.getElementById('wrapper'));
-
-// Connect to server and copy IP buttons
-let selectedRow = null;
-
-document.getElementById('btn-copy').addEventListener('click', () => {
-  if (selectedRow) navigator.clipboard.writeText(selectedRow.ip);
-});
 
 // Populate game select options
 const select = document.getElementById('search-game');
@@ -250,35 +225,44 @@ gameNames.forEach((name, id) => {
   select.appendChild(option);
 });
 
+// Initialise table
+const filter_json = JSON.parse(localStorage.getItem('filter')) ?? {};
+const filter = buildFilter(filter_json);
+
+for (const [key, id] of Object.entries(FIELD_MAP)) {
+  const el = document.getElementById(id);
+  const val = filter_json[key];
+  if (!el || !val) continue;
+  if (el.type === 'checkbox') el.checked = true;
+  else el.value = val;
+}
+
+createTable(filter ? () => getServers(5000, filter).then((data) => transformData(data.servers)) : []).render(document.getElementById('wrapper'));
+
+// Connect to server and copy IP buttons
+let selectedRow = null;
+
+document.getElementById('btn-copy').addEventListener('click', () => {
+  if (selectedRow) navigator.clipboard.writeText(selectedRow.ip);
+});
+
 // Handle form
 document.getElementById('search-form').addEventListener('submit', (e) => {
   e.preventDefault();
 
   const data = Object.fromEntries(new FormData(e.target));
-  let filter = '';
 
-  const name = data['search-name'].trim();
-  const map = data['search-map'].trim();
-  const appid = data['search-game'].trim();
-  const secure = data['search-secure'];
-  const not_full = data['search-not-full'];
-  const has_players = data['search-has-players'];
-  if (name) filter += `\\name_match\\*${sanitize(name)}*`;
-  if (map) filter += `\\map\\${sanitize(map)}`;
-  if (appid) filter += `\\appid\\${sanitize(appid)}`;
-  if (secure) filter += `\\secure\\1`;
-  if (not_full) filter += `\\full\\1`;
-  if (has_players) filter += `\\empty\\1`;
+  localStorage.setItem(
+    'filter',
+    JSON.stringify({
+      'name': data['search-name'].trim(),
+      'map': data['search-map'].trim(),
+      'appid': parseInt(data['search-game']),
+      'secure': !!data['search-secure'],
+      'not_full': !!data['search-not-full'],
+      'has_players': !!data['search-has-players'],
+    }),
+  );
 
-  const filter_obj = {
-    'name': name,
-    'map': map,
-    'appid': appid,
-    'secure': !!secure,
-    'not_full': !!not_full,
-    'has_players': !!has_players,
-  };
-  localStorage.setItem('filter', JSON.stringify(filter_obj));
-
-  updateTable(() => getServers(5000, filter).then((data) => transformData(data.servers)));
+  updateTable(() => getServers(5000, buildFilter(data)).then((data) => transformData(data.servers)));
 });
