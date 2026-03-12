@@ -37,6 +37,7 @@ const gameNames = new Map([
   [222880, 'Insurgency (2014)'],
   [224260, 'No More Room in Hell'],
   [238430, 'Contagion'],
+  [252490, 'Rust'],
 ]);
 
 const WORKER_URL = 'https://steam-game-servers.andrewchen796.workers.dev?';
