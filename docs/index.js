@@ -79,8 +79,8 @@ function transformData(data) {
   return servers;
 }
 
-function createTable() {
-  return new gridjs.Grid({
+function createTable(data) {
+  const table =  new gridjs.Grid({
     columns: [
       'Server Name',
       'Server IP',
@@ -108,44 +108,46 @@ function createTable() {
     pagination: {
       limit: 15,
     },
-    data: [],
+    data: data,
   });
+
+  table.on('rowClick', (e, row) => {
+    document.querySelectorAll('tr.selected').forEach(r => r.classList.remove('selected'));
+
+    e.currentTarget.classList.add('selected');
+    selectedRow = {
+      ip: row.cells[1].data,
+    };
+
+    const connect = document.getElementById('btn-connect');
+    connect.href = `steam://connect/${selectedRow.ip}`;
+    connect.classList.remove('disabled');
+
+    document.getElementById('btn-copy').disabled = false;
+  });
+
+  return table
 }
 
-function updateTable(table, data) {
+function updateTable(data) {
   const connect = document.getElementById('btn-connect');
   connect.href = '#';
   connect.classList.add('disabled');
 
   document.getElementById('btn-copy').disabled = true;
 
-  table.updateConfig({
-    data: () => {
-      return data.then((data) => transformData(data.servers));
-    },
-  }).forceRender();
+  document.getElementById('wrapper').remove();
+  let wrapper = document.createElement("div");
+  wrapper.id = "wrapper";
+  document.getElementById('container').appendChild(wrapper);
+  createTable(data).render(wrapper);
 }
 
 // Initialise table
-const table = createTable().render(document.getElementById('wrapper'));
+createTable([]).render(document.getElementById('wrapper'));
 
 // Connect to server and copy IP buttons
 let selectedRow = null;
-
-table.on('rowClick', (e, row) => {
-  document.querySelectorAll('tr.selected').forEach(r => r.classList.remove('selected'));
-
-  e.currentTarget.classList.add('selected');
-  selectedRow = {
-    ip: row.cells[1].data,
-  };
-
-  const connect = document.getElementById('btn-connect');
-  connect.href = `steam://connect/${selectedRow.ip}`;
-  connect.classList.remove('disabled');
-
-  document.getElementById('btn-copy').disabled = false;
-});
 
 document.getElementById('btn-copy').addEventListener('click', () => {
   if (selectedRow) navigator.clipboard.writeText(selectedRow.ip);
@@ -183,5 +185,5 @@ document.getElementById('search-form').addEventListener('submit', (e) => {
   if (not_full) filter += `\\full\\1`;
   if (has_players) filter += `\\empty\\1`;
 
-  updateTable(table, getServers(5000, filter));
+  getServers(5000, filter).then((data) => updateTable(transformData(data.servers)));
 });
