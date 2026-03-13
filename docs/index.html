@@ -22,64 +22,63 @@
 </head>
 <body>
     <div id="container" class="container-fluid px-4 py-3">
-
-      <div class="d-flex align-items-end justify-content-between mb-3">
-        <div class="d-flex flex-column">
-            <h4 class="mb-0 fw-bold">Steam Server Browser</h4>
-            <div>
-            <a href="https://github.com/andrew-chen2/steam-game-servers">
-                <i class="fa fa-github"></i>
-                <strong>Repository</strong>
-            </a>
+        <div class="d-flex align-items-end justify-content-between mb-3">
+            <div class="d-flex flex-column">
+                <h4 class="mb-0 fw-bold">Steam Server Browser</h4>
+                <div>
+                <a href="https://github.com/andrew-chen2/steam-game-servers">
+                    <i class="fa fa-github"></i>
+                    <strong>Repository</strong>
+                </a>
+                </div>
+            </div>
+            <div class="d-flex gap-2">
+            <a id="btn-connect" class="btn btn-success disabled" href="#">Join Server</a>
+            <button id="btn-copy" class="btn btn-outline-secondary" disabled>Copy IP</button>
             </div>
         </div>
-        <div class="d-flex gap-2">
-          <a id="btn-connect" class="btn btn-success disabled" href="#">Join Server</a>
-          <button id="btn-copy" class="btn btn-outline-secondary" disabled>Copy IP</button>
-        </div>
-      </div>
 
-      <form id="search-form" class="card card-body bg-body-tertiary mb-3">
-        <div class="row g-3 align-items-end">
-          <div class="col-12 col-md-4 col-lg-3">
-            <label for="search-name" class="form-label small fw-semibold text-uppercase text-muted mb-1">Server Name</label>
-            <input id="search-name" type="text" name="search-name" class="form-control"
-              placeholder="Search server name..." />
-          </div>
-          <div class="col-12 col-md-4 col-lg-3">
-            <label for="search-map" class="form-label small fw-semibold text-uppercase text-muted mb-1">Map</label>
-            <input id="search-map" type="text" name="search-map" class="form-control"
-              placeholder="Search map name..." />
-          </div>
-          <div class="col-12 col-md-4 col-lg-3">
-            <label for="search-game" class="form-label small fw-semibold text-uppercase text-muted mb-1">Game</label>
-            <select id="search-game" name="search-game" class="form-select">
-              <option value="">All Games</option>
-            </select>
-          </div>
-          <div class="col-12 col-lg-3">
-            <div class="d-flex flex-wrap gap-3 pb-1">
-              <div class="form-check mb-0">
-                <input id="search-secure" type="checkbox" name="search-secure" class="form-check-input" />
-                <label for="search-secure" class="form-check-label small">Secure</label>
-              </div>
-              <div class="form-check mb-0">
-                <input id="search-not-full" type="checkbox" name="search-not-full" class="form-check-input" />
-                <label for="search-not-full" class="form-check-label small">Not Full</label>
-              </div>
-              <div class="form-check mb-0">
-                <input id="search-has-players" type="checkbox" name="search-has-players" class="form-check-input" />
-                <label for="search-has-players" class="form-check-label small">Has Players</label>
-              </div>
+        <form id="search-form" class="card card-body bg-body-tertiary mb-3">
+            <div class="row g-3 align-items-end">
+            <div class="col-12 col-md-4 col-lg-3">
+                <label for="search-name" class="form-label small fw-semibold text-uppercase text-muted mb-1">Server Name</label>
+                <input id="search-name" type="text" name="search-name" class="form-control"
+                placeholder="Search server name..." />
             </div>
-          </div>
-          <div class="col-12 col-lg-auto ms-lg-auto">
-            <button id="btn-submit" type="submit" class="btn btn-primary w-100">Search</button>
-          </div>
-        </div>
-      </form>
+            <div class="col-12 col-md-4 col-lg-3">
+                <label for="search-map" class="form-label small fw-semibold text-uppercase text-muted mb-1">Map</label>
+                <input id="search-map" type="text" name="search-map" class="form-control"
+                placeholder="Search map name..." />
+            </div>
+            <div class="col-12 col-md-4 col-lg-3">
+                <label for="search-game" class="form-label small fw-semibold text-uppercase text-muted mb-1">Game</label>
+                <select id="search-game" name="search-game" class="form-select">
+                <option value="">All Games</option>
+                </select>
+            </div>
+            <div class="col-12 col-lg-3">
+                <div class="d-flex flex-wrap gap-3 pb-1">
+                <div class="form-check mb-0">
+                    <input id="search-secure" type="checkbox" name="search-secure" class="form-check-input" />
+                    <label for="search-secure" class="form-check-label small">Secure</label>
+                </div>
+                <div class="form-check mb-0">
+                    <input id="search-not-full" type="checkbox" name="search-not-full" class="form-check-input" />
+                    <label for="search-not-full" class="form-check-label small">Not Full</label>
+                </div>
+                <div class="form-check mb-0">
+                    <input id="search-has-players" type="checkbox" name="search-has-players" class="form-check-input" />
+                    <label for="search-has-players" class="form-check-label small">Has Players</label>
+                </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-auto ms-lg-auto">
+                <button id="btn-submit" type="submit" class="btn btn-primary w-100">Search</button>
+            </div>
+            </div>
+        </form>
 
-      <div id="wrapper"></div>
+        <div id="wrapper"></div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
