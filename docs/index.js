@@ -140,6 +140,7 @@ function transformData(data) {
 
 function createTable(data) {
   document.getElementById('btn-submit').disabled = true;
+  document.getElementById('btn-clear').disabled = true;
 
   const table =  new gridjs.Grid({
     columns: [
@@ -178,6 +179,7 @@ function createTable(data) {
     const cur = state.status;
     if ((prev === 2 && cur === 3) || (prev === 1 && cur === 4)) {
       document.getElementById('btn-submit').disabled = false;
+      document.getElementById('btn-clear').disabled = false;
     }
   });
 
@@ -282,4 +284,17 @@ document.getElementById('search-form').addEventListener('submit', (e) => {
 
   localStorage.setItem('filter', JSON.stringify(filter_obj));
   updateTable(() => getServers(5000, buildFilter(filter_obj)).then((data) => transformData(data.servers)));
+});
+
+// Clear filters button
+document.getElementById('btn-clear').addEventListener('click', () => {
+  document.getElementById('search-name').value = '';
+  document.getElementById('search-map').value = '';
+  document.getElementById('search-game').value = '';
+  document.getElementById('search-secure').checked = false;
+  document.getElementById('search-not-full').checked = false;
+  document.getElementById('search-has-players').checked = false;
+
+  localStorage.removeItem('filter');
+  updateTable(() => getServers(5000).then((data) => transformData(data.servers)));
 });
