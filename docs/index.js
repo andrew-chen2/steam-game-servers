@@ -250,7 +250,7 @@ for (const [key, id] of Object.entries(FIELD_MAP)) {
   else el.value = val;
 }
 
-createTable(filter ? () => getServers(5000, filter).then((data) => transformData(data.servers)) : []).render(document.getElementById('wrapper'));
+createTable(filter ? () => getServers(10000, filter).then((data) => transformData(data.servers)) : []).render(document.getElementById('wrapper'));
 
 // Connect to server and copy IP buttons
 let selectedRow = null;
@@ -283,7 +283,7 @@ document.getElementById('search-form').addEventListener('submit', (e) => {
   }
 
   localStorage.setItem('filter', JSON.stringify(filter_obj));
-  updateTable(() => getServers(5000, buildFilter(filter_obj)).then((data) => transformData(data.servers)));
+  updateTable(() => getServers(10000, buildFilter(filter_obj)).then((data) => transformData(data.servers)));
 });
 
 // Clear filters button
@@ -296,5 +296,5 @@ document.getElementById('btn-clear').addEventListener('click', () => {
   document.getElementById('search-has-players').checked = false;
 
   localStorage.removeItem('filter');
-  updateTable(() => getServers(5000).then((data) => transformData(data.servers)));
+  updateTable(() => getServers(10000).then((data) => transformData(data.servers)));
 });
