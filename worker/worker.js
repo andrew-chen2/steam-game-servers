@@ -60,7 +60,9 @@ export default {
 
     const incoming = new URL(request.url);
     const filter = incoming.searchParams.get("filter") ?? "";
-    const limit  = Math.min(parseInt(incoming.searchParams.get("limit") ?? "5000", 10), 20000);
+    const limit = Math.min(parseInt(incoming.searchParams.get("limit") ?? "5000", 10), 20000);
+    const min = parseInt(incoming.searchParams.get("min") ?? "0", 10);
+    const max = parseInt(incoming.searchParams.get("max") ?? "9999", 10);
 
     const steamUrl = new URL(STEAM_API_BASE);
     steamUrl.searchParams.set("key", env.STEAM_API_KEY); //Cloudflare worker env
@@ -103,7 +105,11 @@ export default {
       return jsonResponse({ error: "Invalid JSON from Steam API" }, 502);
     }
 
-    const servers = (body?.response?.servers ?? []).filter(s => !VALVE_SERVER.test(s.name ?? '')); // Filter out Valve servers
+    const servers = (body?.response?.servers ?? []).filter((s) => {
+      const players = parseInt(s.players, 10);
+      if (isNaN(players)) return false;
+      return !VALVE_SERVER.test(s.name ?? '') && players >= min && players <= max;
+    });
     const slimmed = slim(servers);
     const payload = { servers: slimmed, count: slimmed.length, cached_at: Date.now() };
 

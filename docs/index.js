@@ -99,12 +99,16 @@ const FIELD_MAP = {
   secure: 'search-secure',
   not_full: 'search-not-full',
   has_players: 'search-has-players',
+  min: 'search-min',
+  max: 'search-max',
 };
 
-async function getServers(limit, filter) {
+async function getServers(limit, filter, min, max) {
   const url = new URL(WORKER_URL);
   if (limit) url.searchParams.set('limit', limit);
   if (filter) url.searchParams.set('filter', filter);
+  if (min) url.searchParams.set('min', min);
+  if (max) url.searchParams.set('max', max);
 
   try {
     const response = await fetch(url);
@@ -244,13 +248,13 @@ const filter = buildFilter(filter_json);
 
 for (const [key, id] of Object.entries(FIELD_MAP)) {
   const el = document.getElementById(id);
-  const val = filter_json[key];
+  const val = filter_json[key] ?? localStorage.getItem(key);
   if (!el || !val) continue;
   if (el.type === 'checkbox') el.checked = true;
   else el.value = val;
 }
 
-createTable(filter ? () => getServers(10000, filter).then((data) => transformData(data.servers)) : []).render(document.getElementById('wrapper'));
+createTable(filter ? () => getServers(10000, filter, localStorage.getItem('min'), localStorage.getItem('max')).then((data) => transformData(data.servers)) : []).render(document.getElementById('wrapper'));
 
 // Connect to server and copy IP buttons
 let selectedRow = null;
@@ -282,8 +286,14 @@ document.getElementById('search-form').addEventListener('submit', (e) => {
     'has_players': !!data['search-has-players'],
   }
 
+  const min = data['search-min'];
+  const max = data['search-max'];
+
+  if (min) localStorage.setItem('min', min);
+  if (max) localStorage.setItem('max', max);
+
   localStorage.setItem('filter', JSON.stringify(filter_obj));
-  updateTable(() => getServers(10000, buildFilter(filter_obj)).then((data) => transformData(data.servers)));
+  updateTable(() => getServers(10000, buildFilter(filter_obj), min, max).then((data) => transformData(data.servers)));
 });
 
 // Clear filters button
@@ -296,5 +306,7 @@ document.getElementById('btn-clear').addEventListener('click', () => {
   document.getElementById('search-has-players').checked = false;
 
   localStorage.removeItem('filter');
+  localStorage.removeItem('min');
+  localStorage.removeItem('max');
   updateTable(() => getServers(10000).then((data) => transformData(data.servers)));
 });

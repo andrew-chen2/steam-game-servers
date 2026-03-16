@@ -40,46 +40,54 @@
 
         <form id="search-form" class="card card-body bg-body-tertiary mb-3">
             <div class="row g-3 align-items-end">
-            <div class="col-12 col-md-4 col-lg-3">
-                <label for="search-name" class="form-label small fw-semibold text-uppercase text-muted mb-1">Server Name</label>
-                <input id="search-name" type="text" name="search-name" class="form-control" placeholder="Search server name..." />
-            </div>
-            <div class="col-12 col-md-4 col-lg-3">
-                <label for="search-map" class="form-label small fw-semibold text-uppercase text-muted mb-1">Map</label>
-                <input id="search-map" type="text" name="search-map" class="form-control" placeholder="Search map name..." />
-            </div>
-            <div class="col-12 col-md-4 col-lg-3">
-                <label for="search-game" class="form-label small fw-semibold text-uppercase text-muted mb-1">Game</label>
-                <select id="search-game" name="search-game" class="form-select">
-                    <option value="">All Games</option>
-                </select>
-            </div>
-            <div class="col-12 col-lg-3">
-                <div class="d-flex flex-wrap gap-3 pb-1">
-                    <div class="form-check mb-0">
-                        <input id="search-secure" type="checkbox" name="search-secure" class="form-check-input" />
-                        <label for="search-secure" class="form-check-label small">Secure</label>
-                    </div>
-                    <div class="form-check mb-0">
-                        <input id="search-not-full" type="checkbox" name="search-not-full" class="form-check-input" />
-                        <label for="search-not-full" class="form-check-label small">Not Full</label>
-                    </div>
-                    <div class="form-check mb-0">
-                        <input id="search-has-players" type="checkbox" name="search-has-players" class="form-check-input" />
-                        <label for="search-has-players" class="form-check-label small">Has Players</label>
+                <div class="col-12 col-md-3">
+                    <label for="search-name" class="form-label small fw-semibold text-uppercase text-muted mb-1">Server Name</label>
+                    <input id="search-name" type="text" name="search-name" class="form-control" placeholder="Search server name..." />
+                </div>
+                <div class="col-12 col-md-3">
+                    <label for="search-map" class="form-label small fw-semibold text-uppercase text-muted mb-1">Map</label>
+                    <input id="search-map" type="text" name="search-map" class="form-control" placeholder="Search map name..." />
+                </div>
+                <div class="col-12 col-md-3">
+                    <label for="search-game" class="form-label small fw-semibold text-uppercase text-muted mb-1">Game</label>
+                    <select id="search-game" name="search-game" class="form-select">
+                        <option value="">All Games</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-3">
+                    <label for="search-game" class="form-label small fw-semibold text-uppercase text-muted mb-1">Players</label>
+                    <div class="d-flex align-items-center gap-3">
+                        <input id="search-min" type="number" name="search-min" class="form-control" placeholder="Min" />
+                        <p class="m-0">to</p>
+                        <input id="search-max" type="number" name="search-max" class="form-control" placeholder="Max" />
                     </div>
                 </div>
-            </div>
-            <div class="col-12 col-lg-auto ms-lg-auto">
-                <div class="d-flex flex-wrap gap-2 justify-content-end">
-                    <div>
-                        <button id="btn-submit" type="submit" class="btn btn-primary w-100">Search</button>
-                    </div>
-                    <div>
-                        <button id="btn-clear" type="button" class="btn btn-danger w-100">Clear</button>
+                <div class="col-12 col-md-6">
+                    <div class="d-flex flex-wrap gap-3 pb-1">
+                        <div class="form-check mb-0">
+                            <input id="search-secure" type="checkbox" name="search-secure" class="form-check-input" />
+                            <label for="search-secure" class="form-check-label small">Secure</label>
+                        </div>
+                        <div class="form-check mb-0">
+                            <input id="search-not-full" type="checkbox" name="search-not-full" class="form-check-input" />
+                            <label for="search-not-full" class="form-check-label small">Not Full</label>
+                        </div>
+                        <div class="form-check mb-0">
+                            <input id="search-has-players" type="checkbox" name="search-has-players" class="form-check-input" />
+                            <label for="search-has-players" class="form-check-label small">Has Players</label>
+                        </div>
                     </div>
                 </div>
-            </div>
+                <div class="col-12 col-md-auto ms-md-auto">
+                    <div class="d-flex flex-wrap gap-2 justify-content-end">
+                        <div>
+                            <button id="btn-submit" type="submit" class="btn btn-primary w-100">Search</button>
+                        </div>
+                        <div>
+                            <button id="btn-clear" type="button" class="btn btn-danger w-100">Clear</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
 
