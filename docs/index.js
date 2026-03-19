@@ -289,8 +289,16 @@ document.getElementById('search-form').addEventListener('submit', (e) => {
   const min = data['search-min'];
   const max = data['search-max'];
 
-  if (min) localStorage.setItem('min', min);
-  if (max) localStorage.setItem('max', max);
+  if (min) {
+    localStorage.setItem('min', min);
+  } else {
+    localStorage.removeItem('min');
+  }
+  if (max) {
+    localStorage.setItem('max', max);
+  } else {
+    localStorage.removeItem('max');
+  }
 
   localStorage.setItem('filter', JSON.stringify(filter_obj));
   updateTable(() => getServers(10000, buildFilter(filter_obj), min, max).then((data) => transformData(data.servers)));
